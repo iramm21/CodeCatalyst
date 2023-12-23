@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { validateRegister } = require('../../middlewares/validateRegister');
+const { validatePasswordResetRequest, validatePasswordReset } = require('../../middlewares/validatePasswordReset');
 const userController = require('../../controllers/userController');
 
 // @route   POST api/users/register
@@ -8,7 +9,9 @@ const userController = require('../../controllers/userController');
 // @access  Public
 router.post('/register', validateRegister, userController.register);
 
-// Add the new verification route
+router.post('/request-password-reset', validatePasswordResetRequest, userController.requestPasswordReset);
+router.post('/password-reset', validatePasswordReset, userController.resetPassword);
+
 router.get('/verify/:token', userController.verifyEmail);
 
 module.exports = router;
